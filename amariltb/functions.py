@@ -57,6 +57,7 @@ def get_index(language,category,target_filename,version):
 
 """merges sonix product and meta files, and processes into the ProductWords data base table."""
 def process_sonix(input_dir,target_filename, language,category,version):
+    init_DB()
     DynamoDB.version = version
     data = merger.merge_meta_into_sonix(input_dir,target_filename)
     converter.convert_sonix_data(data,language,category)
