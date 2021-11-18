@@ -4,10 +4,10 @@ import uuid
 from decimal import Decimal
 import hashlib
 import json
-from pw_converter_input_normelizer import normelize_prrat,normelize_sonix_data
-from pw_converter_const import Categories,Languages,Tables
-from pw_converter_db import DynamoDB #get_index,get_transforms,update_index,update_transforms,update_product_words
-from pw_converter_utils import normelize_word,update_index_sheet
+from .pw_converter_input_normelizer import normelize_prrat,normelize_sonix_data
+from .pw_converter_const import Categories,Languages,Tables
+from .pw_converter_db import DynamoDB #get_index,get_transforms,update_index,update_transforms,update_product_words
+from .pw_converter_utils import normelize_word,update_index_sheet
 import os
 from openpyxl import load_workbook
 from openpyxl import Workbook

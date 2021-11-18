@@ -1,7 +1,7 @@
 import uuid
 from decimal import Decimal
 import hashlib
-from pw_converter_db import DynamoDB
+from .pw_converter_db import DynamoDB
 import os
 NORMELIZER_TRANSCRIPT_WORD_ERROR_FLAG = '0'
 

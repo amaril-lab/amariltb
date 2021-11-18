@@ -1,8 +1,8 @@
 import boto3
-from pw_converter_const import Tables,TablesTest,TablesV2
+from .pw_converter_const import Tables,TablesTest,TablesV2
 from boto3.dynamodb.conditions import Key, Attr
-from pw_converter_const import Languages
-from pw_converter_utils import normelize_word
+from .pw_converter_const import Languages
+from .pw_converter_utils import normelize_word
 import os
 import botocore.session
 from decimal import Decimal
