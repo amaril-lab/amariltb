@@ -55,6 +55,12 @@ def get_index(language,category,target_filename,version):
     DynamoDB.version = version
     converter.handle_get_index(language,category,target_filename)
 
+"""merges sonix product and meta files, and processes into the ProductWords data base table."""
+def process_sonix(input_dir,target_filename, language,category,version):
+    DynamoDB.version = version
+    data = merger.merge_meta_into_sonix(input_dir,target_filename)
+    converter.convert_sonix_data(data,language,category)
+
 
 
 def listChunker(lst, csize:int):
