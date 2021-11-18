@@ -3,7 +3,7 @@ import os
 import codecs
 import json
 import pathlib
-import pw_converter_db
+from .pw_converter_db import DynamoDB
 import pw_converter as converter
 
 import boto3
