@@ -10,8 +10,7 @@ custom Python package that is installable from your GitHub repo!
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install Toolbox like below. 
 Rerun this command to check for and install  updates .
 ```bash
-pip install git+https://github.com/Muls/toolbox
-```
+pip install git+https://github.com/amaril-lab/amariltb```
 
 ## Usage
 Features:

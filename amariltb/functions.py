@@ -1,4 +1,56 @@
 from datetime import datetime
+import os
+import codecs
+import json
+import pathlib
+from pw_converter_db import DynamoDB
+import pw_converter as converter
+
+import boto3
+
+
+def init_DB(config_path = None):
+    """Amaril CLI offers the following commands: (for help type: amaril_cli COMMAND --help)"""
+    
+    # CONFIG:
+    # construct default config path:
+    if (not config_path):
+        current_path = pathlib.Path().absolute()
+        config_path = current_path
+    config_dir =  os.path.join(config_path, 'config')
+    gcs_credential_filename =  os.path.join(config_dir, 'able-groove-224509-b2d8d81be85b.json')
+    aws_credential_filename =  os.path.join(config_dir, 'aws_cred.json')
+
+    # if doesnt exist - prompt user:
+
+    print('recieved GCS credential_path:',gcs_credential_filename)
+    print('recieved AWS credential_path:',aws_credential_filename)
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = gcs_credential_filename
+    
+    # load AWS json: 
+    aws_credentials = json.load(codecs.open(aws_credential_filename, 'r', 'utf-8-sig'))
+    # TBD: set env variables        
+    os.environ['AWS_ACCESS_KEY_ID'] = aws_credentials["aws_access_key_id"]
+    os.environ['AWS_SECRET_ACCESS_KEY'] = aws_credentials["aws_secret_access_key"]
+    os.environ['REGION_NAME'] = aws_credentials["region_name"]
+    
+    # init DB:
+    if(not DynamoDB.instance):
+        print('init_DB')
+        DynamoDB.instance = boto3.resource(  'dynamodb',
+                            aws_access_key_id= os.environ['AWS_ACCESS_KEY_ID'],
+                            aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
+                            region_name=os.environ['REGION_NAME'] )
+
+
+
+
+def get_index(language,category,target_filename,version):    
+    init_DB()
+    DynamoDB.version = version
+    converter.handle_get_index(language,category,target_filename)
+
+
 
 def listChunker(lst, csize:int):
     """Yield successive n-sized chunks from lst."""
