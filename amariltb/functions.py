@@ -4,7 +4,7 @@ import codecs
 import json
 import pathlib
 from .pw_converter_db import DynamoDB
-import pw_converter as converter
+from . import pw_converter as converter
 
 import boto3
 
