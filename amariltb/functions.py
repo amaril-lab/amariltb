@@ -44,9 +44,9 @@ def init_DB(config_path = None):
                             aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
                             region_name=os.environ['REGION_NAME'] )
 
-
+"""unifies wave files from a directory in the cloud, to chunks localy."""
 def unify_waves(bucket_name, source_dir,target_dir,files_per_chunk):
-    """unifies wave files from a directory in the cloud, to chunks localy."""
+    init_DB()
     wav_unifier.unify(None,bucket_name,source_dir,target_dir,files_per_chunk)
 
 
