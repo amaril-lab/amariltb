@@ -5,6 +5,8 @@ import json
 import pathlib
 from .pw_converter_db import DynamoDB
 from . import pw_converter as converter
+from . import audio_unifier_meta_merger as merger
+from . import audio_unifier as wav_unifier
 
 import boto3
 
@@ -23,8 +25,8 @@ def init_DB(config_path = None):
 
     # if doesnt exist - prompt user:
 
-    print('recieved GCS credential_path:',gcs_credential_filename)
-    print('recieved AWS credential_path:',aws_credential_filename)
+    #print('recieved GCS credential_path:',gcs_credential_filename)
+    #print('recieved AWS credential_path:',aws_credential_filename)
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = gcs_credential_filename
     
     # load AWS json: 
@@ -43,6 +45,9 @@ def init_DB(config_path = None):
                             region_name=os.environ['REGION_NAME'] )
 
 
+def unify_waves(bucket_name, source_dir,target_dir,files_per_chunk):
+    """unifies wave files from a directory in the cloud, to chunks localy."""
+    wav_unifier.unify(None,bucket_name,source_dir,target_dir,files_per_chunk)
 
 
 def get_index(language,category,target_filename,version):    
