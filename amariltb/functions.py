@@ -73,6 +73,7 @@ def process_praat(input_filename, language,category,version):
 - add the transform 
 """ 
 def add_transform(word,transform,category,language,version):
+    init_DB()
     DynamoDB.version = version
     converter.handleAddTransform(word,transform,language,category)
 
@@ -82,6 +83,7 @@ def add_transform(word,transform,category,language,version):
 - apply this change to products (existing product words change: transform-->rawWord, and  index change accordingly
 """
 def remove_transform(word,language,category,version):
+    init_DB()
     DynamoDB.version = version
     converter.handleRemoveTransform(word,language,category)
 
