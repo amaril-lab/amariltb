@@ -68,6 +68,24 @@ def process_praat(input_filename, language,category,version):
     DynamoDB.version = version
     converter.convert_prrat(input_filename,language,category)
 
+"""make the following changes:
+- remove the index from the index item,
+- add the transform 
+""" 
+def add_transform(word,transform,category,language,version):
+    DynamoDB.version = version
+    converter.handleAddTransform(word,transform,language,category)
+
+"""make the following changes:
+- remove the transform from the index item,
+- add a new index item for the raw word.
+- apply this change to products (existing product words change: transform-->rawWord, and  index change accordingly
+"""
+def remove_transform(word,language,category,version):
+    DynamoDB.version = version
+    converter.handleRemoveTransform(word,language,category)
+
+
 
 def listChunker(lst, csize:int):
     """Yield successive n-sized chunks from lst."""
