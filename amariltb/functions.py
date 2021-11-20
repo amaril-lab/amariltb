@@ -62,6 +62,11 @@ def process_sonix(input_dir,target_filename, language,category,version):
     data = merger.merge_meta_into_sonix(input_dir,target_filename)
     converter.convert_sonix_data(data,language,category)
 
+"""processes a PRRAT grid (excel file) into the ProductWords data base table."""
+def process_praat(input_filename, language,category,version):
+    init_DB()
+    DynamoDB.version = version
+    converter.convert_prrat(input_filename,language,category)
 
 
 def listChunker(lst, csize:int):
