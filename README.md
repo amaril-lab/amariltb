@@ -27,7 +27,7 @@ language = 'english'
 category = 'animals'
 target_filename = 'index_testing.xlsx'
 version = 'V1'
-#amariltb.functions.get_index(language,category,target_filename,version)
+amariltb.functions.get_index(language,category,target_filename,version)
 
 
 # UNIFY WAVES:
