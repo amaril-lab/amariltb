@@ -10,12 +10,12 @@ import pathlib
 
 from boto3.dynamodb.conditions import Key, Attr,Not
 import pickle
-from amaril_data_normelizer import NormelizeDiagnoses,NormelizeMeds,E_Diagnosis
-from amaril_data_filters import C_Attributes
+from .amaril_data_normelizer import NormelizeDiagnoses,NormelizeMeds,E_Diagnosis
+from .amaril_data_filters import C_Attributes
 import logging
 import numpy as np
-from amaril_data_participant import Participant
-from amaril_data_audio_storage import AudioStorage 
+from .amaril_data_participant import Participant
+from .amaril_data_audio_storage import AudioStorage 
 
  
 C_DEBUG_FILENAME = 'debug_log.txt'
