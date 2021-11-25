@@ -1,4 +1,12 @@
-
+*.pickle
+*.pbz2
+debug_log.txt
+debug/
+result/
+temp/
+config/
+files/
+anaconda-project.yml
 
 venv/
 .idea/
