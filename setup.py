@@ -13,6 +13,6 @@ setuptools.setup(
     license='MIT',
     include_package_data=True,
     packages=['amariltb'],
-    install_requires=['boto3','openpyxl','google-cloud-storage','pydub','ffmpeg'],
+    install_requires=['boto3','openpyxl','google-cloud-storage','pydub','ffmpeg','numpy'],
     zip_safe=False,
 )
