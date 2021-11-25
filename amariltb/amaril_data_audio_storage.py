@@ -13,7 +13,7 @@ AUDIO_CACHE_FILE = 'ad_cache.pbz2'
 
 class AudioStorage:
 
-    def __init__(self,credential_path):
+    def __init__(self,credential_path,ad_cache_max_len):
         
         if (not credential_path):
             raise Exception("Error , use must provide credential path.")
@@ -22,6 +22,7 @@ class AudioStorage:
         self.storage_client = storage.Client()
 
         self.cache = self.get_cache()
+        self.ad_cache_max_len = ad_cache_max_len
 
 
     def get_cache(self):
@@ -74,11 +75,12 @@ class AudioStorage:
                 shutil.rmtree(result_dir, ignore_errors=True)
 
             # save to cache file:
-            self.cache[gs_full_path] = audio_segment
-            
-            with bz2.BZ2File(AUDIO_CACHE_FILE, 'wb') as f: 
-                cPickle.dump(self.cache, f)
-            
+            if(len(self.cache) < self.ad_cache_max_len):
+                self.cache[gs_full_path] = audio_segment
+                
+                with bz2.BZ2File(AUDIO_CACHE_FILE, 'wb') as f: 
+                    cPickle.dump(self.cache, f)
+                
             return audio_segment
 
         except Exception as e:

@@ -36,7 +36,7 @@ C_PW_Table =  "ProductWords"
 
 class AmarilData:
 
-    def __init__(self,filters,use_local_db = True,local_ai_db_path='ais_data.pickle',local_pw_db_path='pws_data.pickle',local_index_db_path='index_data.pickle',cred_filename=C_Config_Filename):
+    def __init__(self,filters,use_local_db = True,ad_cache_len=50,local_ai_db_path='ais_data.pickle',local_pw_db_path='pws_data.pickle',local_index_db_path='index_data.pickle',cred_filename=C_Config_Filename):
 
         self.log_warnings = 0
         self.log_errors = 0
@@ -49,7 +49,7 @@ class AmarilData:
         self.data_frame_dict = self.generate_data_frame(self.participants)
 
         gcs_credential_path = "./config/able-groove-224509-b2d8d81be85b.json"
-        self.audio_storage = AudioStorage(gcs_credential_path)
+        self.audio_storage = AudioStorage(gcs_credential_path,ad_cache_len)
         
         self.print_result()
 
