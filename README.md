@@ -59,6 +59,11 @@ word = "סיח"
 transform = "סוס"
 amariltb.functions.add_transform(word,transform,category,language,version)
 
+# ADD TRANSFORMS:
+version = "TEST"
+source_filename =  "/yourPathToTheRelevantDirectory/testing_add_transforms.xlsx"
+amariltb.functions.add_transforms(source_filename,version)
+
 # REMOVE TRANSFORM:
 version = "TEST"
 language = "hebrew"
@@ -72,6 +77,13 @@ language = "hebrew"
 category = "animals" 
 word = "סוס"
 amariltb.functions.delete_from_index(word,language,category,version)
+
+# GET PRODUCT WORDS BY CATEGORY:
+version = "TEST"
+language = "hebrew"
+category = "animals" 
+target_filename = "/yourPathToTheRelevantDirectory/testing_product_words.xlsx"
+amariltb.functions.get_product_words_by_category(category,language,target_filename,version)
 
 ```
 
