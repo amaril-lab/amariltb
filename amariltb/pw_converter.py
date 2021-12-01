@@ -593,6 +593,13 @@ def push(input_data,is_prrat=False):
     return 
 
 def handle_delete_from_index(index_word,language,category):
+    
+    # get updated index:
+    index_items = dynamodb.get_index_items(language,category)
+
+    # verify index:
+    verify_index(index_items,language,category)
+    
     # TBD: check that no transforms are leaning on this index ...
     print ('handle_delete_from_index:',index_word,category,language)
     
