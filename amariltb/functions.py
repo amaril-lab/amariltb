@@ -108,6 +108,7 @@ def get_product_words_by_category(category,language,target_filename,version):
     
 """ deletes word from index and all occurrences of the word in productWords."""
 def delete_from_index(word,language,category,version):
+    print('delete_from_index')
     init_DB(version)
     converter.handle_delete_from_index(word,language,category)
 
