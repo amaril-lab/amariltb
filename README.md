@@ -42,6 +42,7 @@ version = "TEST"
 language = "english"
 category = "animals" 
 input_dir = "/yourPathToTheRelevantDirectory/" 
+target_filename = 'aDebugFilename.xlsx'
 amariltb.functions.process_sonix(input_dir,target_filename, language,category,version)
 
 # PROCESS PRRAT:
@@ -84,6 +85,12 @@ language = "hebrew"
 category = "animals" 
 target_filename = "/yourPathToTheRelevantDirectory/testing_product_words.xlsx"
 amariltb.functions.get_product_words_by_category(category,language,target_filename,version)
+
+
+# DELETE PRODUCT WORDS BY filename:
+version = "TEST"
+filename = "/yourPathToTheRelevantDirectory/testing_delete_product_words.xlsx"
+amariltb.functions.delete_product_words(filename,version)
 
 ```
 
