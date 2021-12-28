@@ -462,7 +462,7 @@ class AmarilData:
 
     def generate_data_frame(self,participants):
         
-        column_names = ['id','workerAge','gender','severity','meds','therapy']
+        column_names = ['id','workerAge','gender','severity','meds','therapy','diagnoses']
 
         columns = {}
 
