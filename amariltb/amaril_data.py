@@ -203,11 +203,11 @@ class AmarilData:
         prefix = '/amaril_data_snapshots/snap_8_2_20/'
 
         # ais:
-        with storage_client.open(prefix+local_ai_db_path,'rb') as f:
+        with storage.open(prefix+local_ai_db_path,'rb') as f:
             self.all_ais = pickle.load(f)
         
         # pws:
-        with storage_client.open(prefix+local_pw_db_path,'rb') as f:
+        with storage.open(prefix+local_pw_db_path,'rb') as f:
             self.all_ais_pws_dict = pickle.load(f)
         
         # index:
