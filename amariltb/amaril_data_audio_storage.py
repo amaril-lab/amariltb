@@ -1,4 +1,7 @@
 from google.cloud import storage
+from google.oauth2 import service_account
+
+import json
 from pydub import AudioSegment
 import os
 from urllib.parse import urlparse
@@ -18,8 +21,20 @@ class AudioStorage:
         if (not credential_path):
             raise Exception("Error , use must provide credential path.")
 
-        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
-        self.storage_client = storage.Client()
+        storage_client = None
+        creds_json = os.environ['GOOGLE_APPLICATION_CREDENTIALS_JSON_DATA'] 
+        if(creds_json):
+            #print('found creds:',creds_json)
+            gcp_json_credentials_dict = json.loads(creds_json)
+            credentials = service_account.Credentials.from_service_account_info(gcp_json_credentials_dict)
+            storage_client = storage.Client(project=gcp_json_credentials_dict['project_id'], credentials=credentials)
+        else:
+            # try local file
+            os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
+            storage_client = storage.Client()
+      
+
+        self.storage_client = storage_client
 
         self.cache = self.get_cache()
         self.ad_cache_max_len = ad_cache_max_len
