@@ -200,7 +200,7 @@ class AmarilData:
         gcs_credential_path = "./config/able-groove-224509-b2d8d81be85b.json"
         os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = gcs_credential_path
         storage_client = storage.Client()
-        snap_id = '/snap_8_2_20/'
+        snap_id = 'snap_8_2_20/'
 
         # ais:
         bucket = storage_client.bucket('amaril_data_snapshots')
