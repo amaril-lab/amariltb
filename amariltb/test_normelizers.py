@@ -3,7 +3,7 @@ from amaril_data_normelizer import E_Diagnosis,NormelizeMeds,NormelizeDiagnoses,
 from amaril_data_filters import  FilterBool,FilterDiagnoses,E_FilterType,FilterNumberInRange
 
 
-
+"""
 meds_normelizer =  NormelizeMeds()
 ai = {  "multiAnswer":
         '{\"diagnoses\":[\"Depression\",\"Anxiety or panic attacks\",\"General Anxiety Disorder (GAD)\",\"Bipolar disorder\"],\"meds\":\"no\"}'
@@ -11,7 +11,7 @@ ai = {  "multiAnswer":
     }
 ai = meds_normelizer.normelize(ai)
 print(ai)
-
+"""
 
 """
 dig_normelizer =  NormelizeDiagnoses()
@@ -46,13 +46,13 @@ for key in digs_dict.keys():
 """
 ######## TEST FILTER ##########
 
-"""
-dig_filter = FilterDiagnoses([E_Diagnosis.add,E_Diagnosis.adhd],E_FilterType.only_data_exists)
 
-ai = {  "diagnoses":['add','adhd','ptsd']}
+dig_filter = FilterDiagnoses([E_Diagnosis.ptsd,E_Diagnosis.adhd],E_FilterType.only_data_exists)
+
+ai = {  "diagnoses":['ptsd']}
 result = dig_filter.passed(ai)
 print(result)
-"""
+
 """
 duration_filter = FilterNumberInRange(55,65,'secondsRecorded')
 

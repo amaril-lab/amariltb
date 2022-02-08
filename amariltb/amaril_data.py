@@ -7,6 +7,7 @@ import codecs
 
 import boto3
 import pathlib
+from google.cloud import storage
 
 from boto3.dynamodb.conditions import Key, Attr,Not
 import pickle
@@ -36,12 +37,16 @@ C_PW_Table =  "ProductWords"
 
 class AmarilData:
 
-    def __init__(self,filters,use_local_db = True,ad_cache_len=50,local_ai_db_path='ais_data.pickle',local_pw_db_path='pws_data.pickle',local_index_db_path='index_data.pickle',cred_filename=C_Config_Filename):
+    def __init__(self,filters,use_local_db = True,use_snapshot=False,ad_cache_len=50,local_ai_db_path='ais_data.pickle',local_pw_db_path='pws_data.pickle',local_index_db_path='index_data.pickle',cred_filename=C_Config_Filename):
 
         self.log_warnings = 0
         self.log_errors = 0
 
-        self.load_data(use_local_db,local_ai_db_path,local_pw_db_path,local_index_db_path,cred_filename)
+        if(use_snapshot):
+            self.load_snapshot(use_local_db,local_ai_db_path,local_pw_db_path,local_index_db_path,cred_filename)
+        else:
+            self.load_data(use_local_db,local_ai_db_path,local_pw_db_path,local_index_db_path,cred_filename)
+        
         self.filter(filters)
         
         # generate data:
@@ -186,6 +191,33 @@ class AmarilData:
             if(ai['id'] in ai_id_list ):
                 print('ai id:'+ai['id'] +' dig: ' + str(ai['diagnoses']))
 
+    
+    def load_snapshot(self,use_local_db,local_ai_db_path,local_pw_db_path,local_index_db_path,cred_filename):
+        from datetime import datetime
+        current_time = datetime.now().strftime("%H:%M:%S")
+        print("start loading  Time =", current_time)
+        
+        gcs_credential_path = "./config/able-groove-224509-b2d8d81be85b.json"
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = gcs_credential_path
+        storage_client = storage.Client()
+        prefix = '/amaril_data_snapshots/snap_8_2_20/'
+
+        # ais:
+        with storage_client.open(prefix+local_ai_db_path,'rb') as f:
+            self.all_ais = pickle.load(f)
+        
+        # pws:
+        with storage_client.open(prefix+local_pw_db_path,'rb') as f:
+            self.all_ais_pws_dict = pickle.load(f)
+        
+        # index:
+        with storage_client.open(prefix+local_index_db_path,'rb') as f:
+            self.indexes = pickle.load(f)
+        
+        current_time = datetime.now().strftime("%H:%M:%S")
+        print("done loading  Time =", current_time)
+        
+    
     def load_data(self,use_local_db,local_ai_db_path,local_pw_db_path,local_index_db_path,cred_filename):
 
         ais_file_exists = os.path.isfile(local_ai_db_path)
