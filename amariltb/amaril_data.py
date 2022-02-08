@@ -200,19 +200,26 @@ class AmarilData:
         gcs_credential_path = "./config/able-groove-224509-b2d8d81be85b.json"
         os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = gcs_credential_path
         storage_client = storage.Client()
-        prefix = '/amaril_data_snapshots/snap_8_2_20/'
+        snap_id = '/snap_8_2_20/'
 
         # ais:
-        with storage.open(prefix+local_ai_db_path,'rb') as f:
-            self.all_ais = pickle.load(f)
+        bucket = storage_client.bucket('amaril_data_snapshots')
+        blob = bucket.blob(snap_id+local_ai_db_path)
+        pickle_in = blob.download_as_string()
+        self.all_ais =  pickle.loads(pickle_in)
+
         
         # pws:
-        with storage.open(prefix+local_pw_db_path,'rb') as f:
-            self.all_ais_pws_dict = pickle.load(f)
+        blob = bucket.blob(snap_id+local_pw_db_path)
+        pickle_in = blob.download_as_string()
+        self.all_ais_pws_dict =  pickle.loads(pickle_in)
+
         
         # index:
-        with storage_client.open(prefix+local_index_db_path,'rb') as f:
-            self.indexes = pickle.load(f)
+        blob = bucket.blob(snap_id+local_index_db_path)
+        pickle_in = blob.download_as_string()
+        self.indexes =  pickle.loads(pickle_in)
+
         
         current_time = datetime.now().strftime("%H:%M:%S")
         print("done loading  Time =", current_time)
