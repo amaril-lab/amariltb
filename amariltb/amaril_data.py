@@ -8,6 +8,7 @@ import codecs
 import boto3
 import pathlib
 from google.cloud import storage
+from google.oauth2 import service_account
 
 from boto3.dynamodb.conditions import Key, Attr,Not
 import pickle
@@ -193,13 +194,20 @@ class AmarilData:
 
     
     def load_snapshot(self,use_local_db,local_ai_db_path,local_pw_db_path,local_index_db_path,cred_filename):
-        from datetime import datetime
-        current_time = datetime.now().strftime("%H:%M:%S")
-        print("start loading  Time =", current_time)
-        
-        gcs_credential_path = "./config/able-groove-224509-b2d8d81be85b.json"
-        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = gcs_credential_path
-        storage_client = storage.Client()
+
+        storage_client = None
+        creds_json = os.environ['GOOGLE_APPLICATION_CREDENTIALS_JSON_DATA'] 
+        if(creds_json):
+            print('found creds:',creds_json)
+            gcp_json_credentials_dict = json.loads(creds_json)
+            credentials = service_account.Credentials.from_service_account_info(gcp_json_credentials_dict)
+            storage_client = storage.Client(project=gcp_json_credentials_dict['project_id'], credentials=credentials)
+        else:
+            # try local file
+            gcs_credential_path = "./config/able-groove-224509-b2d8d81be85b.json"
+            os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = gcs_credential_path
+            storage_client = storage.Client()
+      
         snap_id = 'snap_8_2_20/'
 
         # ais:
@@ -220,10 +228,6 @@ class AmarilData:
         pickle_in = blob.download_as_string()
         self.indexes =  pickle.loads(pickle_in)
 
-        
-        current_time = datetime.now().strftime("%H:%M:%S")
-        print("done loading  Time =", current_time)
-        
     
     def load_data(self,use_local_db,local_ai_db_path,local_pw_db_path,local_index_db_path,cred_filename):
 
