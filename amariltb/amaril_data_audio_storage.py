@@ -22,9 +22,10 @@ class AudioStorage:
             raise Exception("Error , use must provide credential path.")
 
         storage_client = None
-        creds_json = os.environ['GOOGLE_APPLICATION_CREDENTIALS_JSON_DATA'] 
-        if(creds_json):
-            #print('found creds:',creds_json)
+        if( ('GOOGLE_APPLICATION_CREDENTIALS_JSON_DATA' in os.environ) and  
+            os.environ['GOOGLE_APPLICATION_CREDENTIALS_JSON_DATA']):
+            
+            creds_json =  os.environ['GOOGLE_APPLICATION_CREDENTIALS_JSON_DATA']
             gcp_json_credentials_dict = json.loads(creds_json)
             credentials = service_account.Credentials.from_service_account_info(gcp_json_credentials_dict)
             storage_client = storage.Client(project=gcp_json_credentials_dict['project_id'], credentials=credentials)
