@@ -585,7 +585,7 @@ class AmarilData:
             "#lang": "language",
             "#crdAt" : "createdAt"
         }
-        ais_pe = "#cat,#lang,id,#crdAt,diagnoses,multiAnswer,secondsRecorded,secondsRequested,workerAge,gender,severity,meds,therapy,filename"
+        ais_pe = "#cat,#lang,id,#crdAt,diagnoses,multiAnswer,secondsRecorded,secondsRequested,workerAge,gender,severity,meds,therapy,filename,experimentName"
 
         all_ais = self.db_get_all_items(ais_pe,
                                                 ais_ean,

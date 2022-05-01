@@ -1,6 +1,6 @@
 from amaril_data_normelizer import E_Diagnosis,NormelizeMeds,NormelizeDiagnoses,NormelizeCreateDiagnosesDict
 
-from amaril_data_filters import  FilterBool,FilterDiagnoses,E_FilterType,FilterNumberInRange
+from amaril_data_filters import  FilterString,FilterBool,FilterDiagnoses,E_FilterType,FilterNumberInRange
 
 
 """
@@ -46,13 +46,13 @@ for key in digs_dict.keys():
 """
 ######## TEST FILTER ##########
 
-
+"""
 dig_filter = FilterDiagnoses([E_Diagnosis.ptsd,E_Diagnosis.adhd],E_FilterType.only_data_exists)
 
 ai = {  "diagnoses":['ptsd']}
 result = dig_filter.passed(ai)
 print(result)
-
+"""
 """
 duration_filter = FilterNumberInRange(55,65,'secondsRecorded')
 
@@ -60,10 +60,10 @@ ai = {  "secondsRecorded":54}
 result = duration_filter.passed(ai)
 print(result)
 """
-"""
-meds_filter = FilterBool(False,'meds')
 
-ai = {  "meds":True}
-result = meds_filter.passed(ai)
+exp_name_filter = FilterString('uk01','experimentName')
+
+ai = {  "experimentName":'uk1'}
+result = exp_name_filter.passed(ai)
 print(result)
-"""
+

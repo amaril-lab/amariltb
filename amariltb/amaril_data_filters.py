@@ -10,7 +10,8 @@ C_Attributes = {
     "language":"language",
     "createdAt":"createdAt",
     "index":"index",
-    "start":"start"
+    "start":"start",
+    "experimentName":"experimentName",
 }
 
 class E_FilterType(Enum):
@@ -85,6 +86,27 @@ class FilterBool(Filter):
         
         return (bool_val == self.bool_val)
 
+class FilterString(Filter):
+    def __init__(self,str_val,column_name,filter_if_no_column = True):
+        self.column_name  = column_name
+        self.str_val = str_val
+        self.filter_if_no_column = filter_if_no_column
+    
+    def passed(self,item_dict,all_ais_pws_dict = None):
+
+        # no column:
+        if not (self.column_name in item_dict ): 
+            # should pass?
+            if(self.filter_if_no_column): 
+                
+                return False
+            else:
+            
+                return True
+            
+        str_val  = item_dict[self.column_name]
+        
+        return (str_val == self.str_val)
 
 class FilterStringEquals(Filter):
     def __init__(self,str,column_name,filter_if_no_column = True):

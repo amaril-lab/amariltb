@@ -5,7 +5,7 @@ tool box for amaril lab.
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install Amaril Toolbox like below. 
 Rerun this command to check for and install  updates with the flag: --upgrade.
 ```bash
-pip install git+https://github.com/amaril-lab/amariltb
+pip install git+https://${GITHUB_TOKEN}@github.com/amaril-lab/amariltb
 ```
 
 ## Usage
