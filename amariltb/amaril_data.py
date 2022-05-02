@@ -293,7 +293,7 @@ class AmarilData:
                 continue
 
             if last_pw_item['start'] > secs_thresh:
-                log.warning('going to remove pw with start:'+str(last_pw_item['start']+' assignmentId: '+last_pw_item['assignmentId']+' filename: '+last_pw_item['filename']))
+                log.warning('going to remove pw with start:'+str(last_pw_item['start'])+' assignmentId: '+last_pw_item['assignmentId']+' filename: '+last_pw_item['filename'])
                 ai_ids_to_remove.append(last_pw_item['assignmentId']) 
                 filenames.append(last_pw_item['filename']) 
         
