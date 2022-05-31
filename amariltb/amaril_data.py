@@ -506,7 +506,7 @@ class AmarilData:
 
     def generate_data_frame(self,participants):
         
-        column_names = ['id','workerAge','gender','severity','meds','therapy','diagnoses']
+        column_names = ['id','workerAge','gender','severity','meds','therapy','diagnoses','correctBallSelected']
 
         columns = {}
 
@@ -585,7 +585,7 @@ class AmarilData:
             "#lang": "language",
             "#crdAt" : "createdAt"
         }
-        ais_pe = "#cat,#lang,id,#crdAt,diagnoses,multiAnswer,secondsRecorded,secondsRequested,workerAge,gender,severity,meds,therapy,filename,experimentName"
+        ais_pe = "#cat,#lang,id,#crdAt,diagnoses,multiAnswer,secondsRecorded,secondsRequested,workerAge,gender,severity,meds,therapy,filename,experimentName,correctBallSelected"
 
         all_ais = self.db_get_all_items(ais_pe,
                                                 ais_ean,
