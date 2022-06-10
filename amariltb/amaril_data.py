@@ -48,10 +48,10 @@ class AmarilData:
         else:
             self.load_data(use_local_db,local_ai_db_path,local_pw_db_path,local_index_db_path,cred_filename)
         
-        self.filter(filters)
-        
+        self.data = self.filter_v2(filters)
+        print(self.data)
         # generate data:
-        self.participants = self.create_participants()
+        self.participants = self.create_participants_v2(self.data)
         self.data_frame_dict = self.generate_data_frame(self.participants)
 
         gcs_credential_path = "./config/able-groove-224509-b2d8d81be85b.json"
@@ -533,8 +533,108 @@ class AmarilData:
                 
         return  columns
 
+    def get_filter(self,filters,column_name):
+        for filter in filters:
+            if(column_name == filter.column_name):
+                return filter
+        return None
+
+    def filters_to_query(self,filters):
+        # TBD: implement  E_FilterType.only_data_exists
+        # TBD: implement filter if no_column 
+        cat_filter =self.get_filter(filters,C_Attributes.category)
+        lang_filter =self.get_filter(filters,C_Attributes.language)
+        dig_filter =self.get_filter(filters,C_Attributes.diagnoses)
+
+        category =  cat_filter.data_item
+        language = 'heb'
+        if(lang_filter.data_item == "english"):
+            language = 'en'
+
+        # GSI1:
+        diagnoses = dig_filter.data_items
+        diagnosis_key = "UNKNOWN"
+        if( diagnoses and 
+            len(diagnoses) ):
+            if(diagnoses[0] == "none"):
+                diagnosis_key = "NONE"
+            else:
+                diagnosis_key = "EXISTS"
+
+        GSI1PK = "CAT#"+category+"#LANG#"+language
+        GSI1SK = "DIAG#" + diagnosis_key
+
+        key_condition_expression = "#DDB_GSI1PK = :pkey and #DDB_GSI1SK = :skey"
+        expression_attribute_values = {
+            ":pkey": GSI1PK,
+            ":skey": GSI1SK,
+        }
+        expression_attribute_names = {
+            "#DDB_GSI1PK": "GSI1PK",
+            "#DDB_GSI1SK": "GSI1SK",
+        }
+        filter_expression = ""
+    
+        # TBD: insert  the below into dignoses filter:
+        if (diagnosis_key == "EXISTS"):
+            eatn_key = "#DDB_"+C_Attributes.diagnoses
+            expression_attribute_names[eatn_key] = C_Attributes.diagnoses
+
+            for i,dig in enumerate(diagnoses):
+                eatv_key = ":diagnoses_"+dig
+                expression_attribute_values[eatv_key] = dig
+
+                filter_expression = filter_expression + "contains("+ eatn_key + ","+ eatv_key+")"
+
+                if i < (len(diagnoses)-1):
+                    filter_expression = filter_expression + " AND "
 
 
+        return  (key_condition_expression,expression_attribute_values,expression_attribute_names,filter_expression)
+
+        
+
+    def filter_v2(self,filters):
+        cat_filter =self.get_filter(filters,C_Attributes.category)
+        lang_filter =self.get_filter(filters,C_Attributes.language)
+        dig_filter =self.get_filter(filters,C_Attributes.diagnoses)
+
+        # use GSI1 ? (cat/lang/diag)
+        if(cat_filter and lang_filter and dig_filter):
+
+            (key_condition_expression,
+            expression_attribute_values,
+            expression_attribute_names,
+            filter_expression) = self.filters_to_query(filters)
+            
+            print('querying GSI1:'+str(key_condition_expression)+' for: '+str(dig_filter.data_items))
+
+            table = self.db_instance.Table("AmarilDataSandbox") # pylint: disable=no-member
+
+            response = table.query(
+                TableName="AmarilDataSandbox",
+                IndexName="GSI1PK-GSI1SK-index",
+                KeyConditionExpression=key_condition_expression,
+                ExpressionAttributeValues=expression_attribute_values,
+                ExpressionAttributeNames=expression_attribute_names,
+                #Limit=100,
+                FilterExpression=filter_expression,
+            )
+
+        # scan:
+        else:
+            print('Scna not imple,mented yet')
+        
+
+        # query db:
+
+        # data 
+        data = response
+        return data
+
+    def create_participants_v2(self):
+            
+        return []
 
 
 
