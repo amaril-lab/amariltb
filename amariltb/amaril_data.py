@@ -526,7 +526,7 @@ class AmarilData:
                                 
                 if(value == None):
                     self.log_warnings += 1
-                    log.warning('warning, assignment id:'+ai_item['id']+' missing:'+col_name)
+                    log.warning('warning, assignment id:'+ai_item['assignmentId']+' missing:'+col_name)
 
                     value = np.nan
 
