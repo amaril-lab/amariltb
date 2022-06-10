@@ -542,9 +542,9 @@ class AmarilData:
     def filters_to_query(self,filters):
         # TBD: implement  E_FilterType.only_data_exists
         # TBD: implement filter if no_column 
-        cat_filter =self.get_filter(filters,C_Attributes.category)
-        lang_filter =self.get_filter(filters,C_Attributes.language)
-        dig_filter =self.get_filter(filters,C_Attributes.diagnoses)
+        cat_filter =self.get_filter(filters,C_Attributes["category"])
+        lang_filter =self.get_filter(filters,C_Attributes["language"])
+        dig_filter =self.get_filter(filters,C_Attributes["diagnoses"])
 
         category =  cat_filter.data_item
         language = 'heb'
@@ -577,8 +577,8 @@ class AmarilData:
     
         # TBD: insert  the below into dignoses filter:
         if (diagnosis_key == "EXISTS"):
-            eatn_key = "#DDB_"+C_Attributes.diagnoses
-            expression_attribute_names[eatn_key] = C_Attributes.diagnoses
+            eatn_key = "#DDB_"+C_Attributes["diagnoses"]
+            expression_attribute_names[eatn_key] = C_Attributes["diagnoses"]
 
             for i,dig in enumerate(diagnoses):
                 eatv_key = ":diagnoses_"+dig
@@ -595,9 +595,9 @@ class AmarilData:
         
 
     def filter_v2(self,filters):
-        cat_filter =self.get_filter(filters,C_Attributes.category)
-        lang_filter =self.get_filter(filters,C_Attributes.language)
-        dig_filter =self.get_filter(filters,C_Attributes.diagnoses)
+        cat_filter =self.get_filter(filters,C_Attributes["category"])
+        lang_filter =self.get_filter(filters,C_Attributes["language"])
+        dig_filter =self.get_filter(filters,C_Attributes["diagnoses"])
 
         # use GSI1 ? (cat/lang/diag)
         if(cat_filter and lang_filter and dig_filter):
