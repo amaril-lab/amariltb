@@ -50,7 +50,7 @@ class AmarilData:
         
         self.init_db_instance()
         self.data = self.filter_v2(filters)
-        print(self.data)
+        
         # generate data:
         self.participants = self.create_participants_v2(self.data)
         self.data_frame_dict = self.generate_data_frame(self.participants)
@@ -611,6 +611,7 @@ class AmarilData:
             expression_attribute_names,
             filter_expression) = self.filters_to_query(filters)
             
+            # DEBUG:
             print('querying GSI1:'+str(key_condition_expression)+' for: '+str(dig_filter.data_items))
             print(str(key_condition_expression))
             print(str(expression_attribute_values))
@@ -629,20 +630,25 @@ class AmarilData:
                 FilterExpression=filter_expression,
             )
 
+            return response["Items"]
+
         # scan:
         else:
             print('Scna not imple,mented yet')
         
-
-        # query db:
-
-        # data 
-        data = response
-        return data
+        return None
 
     def create_participants_v2(self):
+        participants = [] 
+
+
+        for ai in self.data:
             
-        return []
+            ai['pws'] = []
+            participant = Participant(ai)
+            participants.append(participant)
+
+        return participants
 
 
 
