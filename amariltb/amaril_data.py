@@ -638,11 +638,11 @@ class AmarilData:
         
         return None
 
-    def create_participants_v2(self):
+    def create_participants_v2(self,data):
         participants = [] 
 
 
-        for ai in self.data:
+        for ai in data:
             
             ai['pws'] = []
             participant = Participant(ai)
