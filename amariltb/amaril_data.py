@@ -48,6 +48,7 @@ class AmarilData:
         else:
             self.load_data(use_local_db,local_ai_db_path,local_pw_db_path,local_index_db_path,cred_filename)
         
+        self.init_db_instance()
         self.data = self.filter_v2(filters)
         print(self.data)
         # generate data:
@@ -122,8 +123,7 @@ class AmarilData:
         with open(local_index_db_path, 'wb') as f:
             pickle.dump(self.indexes, f)       
 
-    def load_db_data(self,cred_filename):
-        
+    def init_db_instance(self):
         # load AWS Config file:
         current_path = pathlib.Path().absolute()
         config_dir =  os.path.join(current_path, C_Config_Dirname)
@@ -135,6 +135,10 @@ class AmarilData:
                             aws_access_key_id= aws_credentials["aws_access_key_id"],
                             aws_secret_access_key=aws_credentials["aws_secret_access_key"],
                             region_name= aws_credentials["region_name"] )
+    
+    def load_db_data(self,cred_filename):
+        
+        self.init_db_instance()
 
         self.indexes = self.db_get_indexes()
         self.all_ais = self.db_get_ais()
