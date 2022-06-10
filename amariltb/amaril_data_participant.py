@@ -14,7 +14,7 @@ class Participant:
         
         # sanity:
         if(pw_ar == None or len(pw_ar) == 0):
-            log.warning('Participant:' + data_item['id']+ ' has no product words.')
+            log.warning('Participant:' + data_item['assignmentId']+ ' has no product words.')
         
         # sort pws by start ts :    
         sorted_pws_by_start_ts = sorted(pw_ar, key=lambda k: k['start'])
