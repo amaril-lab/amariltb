@@ -612,6 +612,10 @@ class AmarilData:
             filter_expression) = self.filters_to_query(filters)
             
             print('querying GSI1:'+str(key_condition_expression)+' for: '+str(dig_filter.data_items))
+            print(str(key_condition_expression,
+            expression_attribute_values,
+            expression_attribute_names,
+            filter_expression))
 
             table = self.db_instance.Table("AmarilDataSandbox") # pylint: disable=no-member
 
