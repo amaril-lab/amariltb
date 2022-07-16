@@ -2,7 +2,7 @@ from enum import Enum
 
 C_Attributes = {
     "isSandbox":"isSandbox",
-    "diagnoses":"diagnoses",
+    "i_diagnoses":"diagnoses",
     "meds":"meds",
     "category":"category",
     "secondsRecorded":"secondsRecorded",
