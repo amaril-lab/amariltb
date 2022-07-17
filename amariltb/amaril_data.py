@@ -4,6 +4,7 @@
 import os
 import json
 import codecs
+import requests
 
 import boto3
 import pathlib
@@ -596,9 +597,51 @@ class AmarilData:
 
         return  (key_condition_expression,expression_attribute_values,expression_attribute_names,filter_expression)
 
-        
-
     def filter_v2(self,filters):
+        r = requests.post('http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/filter/animals/en', json={
+            "diagnoses":{
+                "type":"contains",
+                "columnId":"i_diagnoses",
+                "data":["depression"],
+                "operation":"AND"
+            },
+            "therapy":{
+                "type":"equals",
+                "columnId":"i_therapy",
+                "value":true
+            },
+            "workerAge":{
+                "type":"range",
+                "columnId":"i_workerAge",
+                "max":20,
+                "min":1
+            },
+            "gender":{
+                "type":"equals",
+                "columnId":"i_gender",
+                "value":"female"
+            },
+            "secondsRecorded":{
+                "type":"equals",
+                "columnId":"secondsRecorded",
+                "value":60
+            },
+            "pwsCount":{
+                "type":"range",
+                "columnId":"pwsCount",
+                "max":1000,
+                "min":9
+            },
+            "experimentName":{
+                "type":"equals",
+                "columnId":"experimentName",
+                "value":"amarilpro_061021"
+            }
+            })
+        print("Status Code: {r.status_code}, Response: {r.json()}")
+        return []
+
+    def filter_v2_BU(self,filters):
         cat_filter =self.get_filter(filters,C_Attributes["category"])
         lang_filter =self.get_filter(filters,C_Attributes["language"])
         dig_filter =self.get_filter(filters,C_Attributes["diagnoses"])
