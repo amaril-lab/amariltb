@@ -84,7 +84,7 @@ def get_snapshot(snap_id):
 
 def create_df_dict(participants):
     
-    column_names = ['id','workerAge','gender','severity','meds','therapy','diagnoses','correctBallSelected']
+    column_names = ['id','i_workerAge','i_gender','i_severity','i_meds','i_therapy','i_diagnoses','correctBallSelected']
 
     columns = {}
 
