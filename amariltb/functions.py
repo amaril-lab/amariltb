@@ -120,7 +120,7 @@ def hidrate_participants_audio_segments(participants,audio_storage):
             participant.set_audio_segment(participant_audio_segment)
                 
         else:
-            print('hidrate_participants_audio_segments at id:'+participant.data_item['id']+' gs_full_path missing.')
+            print('hidrate_participants_audio_segments at id:'+participant.data_item['assignmentId']+' gs_full_path missing.')
 
 
 """unifies wave files from a directory in the cloud, to chunks localy."""
