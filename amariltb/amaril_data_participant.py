@@ -4,11 +4,11 @@ log = logging.getLogger(__name__)
 
 class Participant:
 
-    def __init__(self,data_item):
+    def __init__(self,data_item,index):
         self.audio_segment = None
-        self.init(data_item)
+        self.init(data_item,index)
 
-    def init(self,data_item):
+    def init(self,data_item,index):
         
         pw_ar = data_item['pws']
         
@@ -21,8 +21,9 @@ class Participant:
         # filter 'start' items:
         filtered_sorted_pws_by_start_ts = []
         for pw_item in sorted_pws_by_start_ts:
-            if(pw_item['index']!=-1  ):
-               filtered_sorted_pws_by_start_ts.append(pw_item)
+            pw_item['index'] = index[pw_item["word"]]
+                
+            filtered_sorted_pws_by_start_ts.append(pw_item)
         
         data_item['pws'] = filtered_sorted_pws_by_start_ts
         self.data_item = data_item

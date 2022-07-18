@@ -644,11 +644,7 @@ class AmarilData:
         json_payload = json.loads(json_str)
         r = requests.post('http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/filter/animals/en', json=json_payload)
 
-        print("Status Code: ")
-        print(r.status_code)
-        print(r.json())
-
-        return []
+        return r.json()
 
     def filter_v2_BU(self,filters):
         cat_filter =self.get_filter(filters,C_Attributes["category"])

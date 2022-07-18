@@ -46,6 +46,47 @@ def init_DB(version,config_path = None):
                             region_name=os.environ['REGION_NAME'] )
     DynamoDB.version = version
 
+
+def get_transforms_dict():
+    init_DB("V1")
+    #TBD: get from tranforms table and
+    return {}
+
+
+# DATA PULL:
+def create_index(ais):
+
+    transforms_dict = get_transforms_dict()
+    words_set = {}
+    
+    for ai in ais:
+        for pw in ai["pws"]:
+            word = pw["word"]
+            # transform word:
+            if word in transforms_dict:
+                word = transforms_dict[word]
+            
+            words_set.add(word)
+    
+    # create index:
+    index_dict = {}
+    for index,word in enumerate(words_set):
+        index_dict[word] = index
+    
+    return index_dict
+
+def create_snapshot(snap_id,snap):
+    pass
+
+def get_snapshot(snap_id):
+    pass
+
+def create_df_dict(participants):
+    pass
+
+def hidrate_participants_audio_segments(participants):
+    pass
+
 """unifies wave files from a directory in the cloud, to chunks localy."""
 def unify_waves(bucket_name, source_dir,target_dir,files_per_chunk):
     # TBD: separate google config out of init_DB:
