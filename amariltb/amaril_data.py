@@ -598,7 +598,9 @@ class AmarilData:
         return  (key_condition_expression,expression_attribute_values,expression_attribute_names,filter_expression)
 
     def filter_v2(self,filters):
-        r = requests.post('http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/filter/animals/en', json={
+
+        json_str  = """
+        {            
             "diagnoses":{
                 "type":"contains",
                 "columnId":"i_diagnoses",
@@ -637,7 +639,11 @@ class AmarilData:
                 "columnId":"experimentName",
                 "value":"amarilpro_061021"
             }
-            })
+        }
+        """
+        json_payload = json.loads(json_str)
+        r = requests.post('http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/filter/animals/en', json=json_payload)
+
         print("Status Code: {r.status_code}, Response: {r.json()}")
         return []
 
