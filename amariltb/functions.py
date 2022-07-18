@@ -8,6 +8,7 @@ from .pw_converter_utils import update_sheet
 from . import pw_converter as converter
 from . import audio_unifier_meta_merger as merger
 from . import audio_unifier as wav_unifier
+import numpy as np
 
 import boto3
 
@@ -82,7 +83,32 @@ def get_snapshot(snap_id):
     pass
 
 def create_df_dict(participants):
-    pass
+    
+    column_names = ['id','workerAge','gender','severity','meds','therapy','diagnoses','correctBallSelected']
+
+    columns = {}
+
+    for index,participant in enumerate(participants):
+
+        ai_item = participant.data_item
+        # iterate values in ai_items
+        for col_name in column_names:
+            
+            value = None
+            if((col_name in ai_item)):
+                value = ai_item[col_name]
+                            
+            if(value == None):
+                print('warning, assignment id:'+ai_item['assignmentId']+' missing:'+col_name)
+
+                value = np.nan
+
+            if(index == 0):
+                columns[col_name] = [value]
+            else:
+                columns[col_name].append(value)
+            
+    return  columns
 
 def hidrate_participants_audio_segments(participants):
     pass
