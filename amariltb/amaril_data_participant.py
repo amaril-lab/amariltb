@@ -37,7 +37,7 @@ class Participant:
         if('filename' in self.data_item):
             return self.data_item['filename']
 
-        log.warning('get_audio_gs_full_path participant:' + self.data_item['id']+ ' has no filename.')
+        print('get_audio_gs_full_path participant:' + self.data_item['id']+ ' has no filename.')
         return None
 
     def set_audio_segment(self, audio_segment):
