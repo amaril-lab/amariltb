@@ -110,8 +110,18 @@ def create_df_dict(participants):
             
     return  columns
 
-def hidrate_participants_audio_segments(participants):
-    pass
+def hidrate_participants_audio_segments(participants,audio_storage):
+    for participant in participants:
+
+        gs_full_path = participant.get_audio_gs_full_path()
+        
+        if(gs_full_path):
+            participant_audio_segment = audio_storage.get_audio_segment(gs_full_path)
+            participant.set_audio_segment(participant_audio_segment)
+                
+        else:
+            print('hidrate_participants_audio_segments at id:'+participant.data_item['id']+' gs_full_path missing.')
+
 
 """unifies wave files from a directory in the cloud, to chunks localy."""
 def unify_waves(bucket_name, source_dir,target_dir,files_per_chunk):
