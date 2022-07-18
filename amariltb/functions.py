@@ -57,7 +57,7 @@ def get_transforms_dict():
 def create_index(ais):
 
     transforms_dict = get_transforms_dict()
-    words_set = {}
+    words_set = set()
     
     for ai in ais:
         for pw in ai["pws"]:
