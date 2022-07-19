@@ -53,6 +53,10 @@ def init_DB(version,config_path = None):
 # DATA PULL:
 def create_index(ais,category,language):
     init_DB("V1")
+    if(language == "en"):
+        language = "english"
+    else:
+        language = "hebrew" 
     transforms_dict =converter.get_transforms_dict({},language,category)
     print(transforms_dict)
     words_set = set()
