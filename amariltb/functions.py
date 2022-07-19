@@ -48,21 +48,19 @@ def init_DB(version,config_path = None):
     DynamoDB.version = version
 
 
-def get_transforms_dict():
-    init_DB("V1")
-    #TBD: get from tranforms table and
-    return {}
 
 
 # DATA PULL:
-def create_index(ais):
-
-    transforms_dict = get_transforms_dict()
+def create_index(ais,category,language):
+    init_DB("V1")
+    transforms_dict = DynamoDB.instance.get_transforms(language,category)
+    print(transforms_dict)
     words_set = set()
     
     for ai in ais:
         for pw in ai["pws"]:
             word = pw["word"]
+            # TBD: normelize word ?
             # transform word:
             if word in transforms_dict:
                 word = transforms_dict[word]
