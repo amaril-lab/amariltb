@@ -77,7 +77,7 @@ def create_index(ais,category,language):
     for index,word in enumerate(words_set):
         index_dict[word] = index
     
-    return index_dict
+    return index_dict,transforms_dict
 
 def create_snapshot(snap_id,snap):
     pass
