@@ -53,7 +53,7 @@ def init_DB(version,config_path = None):
 # DATA PULL:
 def create_index(ais,category,language):
     init_DB("V1")
-    transforms_dict = DynamoDB.instance.get_transforms(language,category)
+    transforms_dict = DynamoDB.get_transforms(language,category)
     print(transforms_dict)
     words_set = set()
     
