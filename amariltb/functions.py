@@ -14,7 +14,7 @@ from . import audio_unifier as wav_unifier
 import numpy as np
 
 import boto3
-
+import requests
 
 def init_DB(version,config_path = None):
     """Amaril CLI offers the following commands: (for help type: amaril_cli COMMAND --help)"""
@@ -50,6 +50,12 @@ def init_DB(version,config_path = None):
                             region_name=os.environ['REGION_NAME'] )
     DynamoDB.version = version
 
+
+def filter_assignments(category,language,filters_str):
+    filter_endpoint = 'http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/filter/'
+    filter = json.loads(filters_str)
+    result = requests.post(filter_endpoint + category + '/' + language, json = filter)
+    return result.json() 
 
 def get_transforms(category,language):
     # TBD HERE V1 ? 
