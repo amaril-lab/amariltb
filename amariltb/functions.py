@@ -1,3 +1,6 @@
+# TBD: transforms
+# TBD: push pws into new DB
+
 from datetime import datetime
 import os
 import codecs
@@ -48,17 +51,19 @@ def init_DB(version,config_path = None):
     DynamoDB.version = version
 
 
-
-
-# DATA PULL:
-def create_index(ais,category,language):
-    init_DB("V1")
+def get_transforms(category,language):
+    # TBD HERE V1 ? 
+    init_DB("V1")    
     if(language == "en"):
         language = "english"
     else:
         language = "hebrew" 
     transforms_dict =converter.get_transforms_dict({},language,category)
-    print(transforms_dict)
+    return transforms_dict
+
+# DATA PULL:
+def create_index(ais,transforms_dict):
+
     words_set = set()
     
     for ai in ais:
@@ -77,7 +82,7 @@ def create_index(ais,category,language):
     for index,word in enumerate(words_set):
         index_dict[word] = index
     
-    return index_dict,transforms_dict
+    return index_dict
 
 def create_snapshot(snap_id,snap):
     pass
