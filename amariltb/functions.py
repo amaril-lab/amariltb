@@ -73,8 +73,6 @@ def create_index(ais,transforms_dict):
             # transform word:
             if word in transforms_dict:
                 word = transforms_dict[word]
-                print('new word:'+word)
-            print('adding:'+word)
             words_set.add(word)
     
     # create index:
