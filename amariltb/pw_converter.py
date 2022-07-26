@@ -11,7 +11,7 @@ from .pw_converter_utils import normelize_word,update_index_sheet
 import os
 from openpyxl import load_workbook
 from openpyxl import Workbook
-
+import requests
 dynamodb = DynamoDB()
 
 """
@@ -217,14 +217,20 @@ def convert_prrat(filename,language,category):
     input_data = normelize_prrat(filename,language,category)
     input_json_str = json.dumps(input_data)
     input_obj = json.loads(input_json_str, parse_float=Decimal)
-    is_prat = True
-    push(input_obj,is_prat)
+    #is_prat = True
+    #push(input_obj,is_prat)
+    
+    #res = requests.post('http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/filter/animals/en', json=input_obj)
+    #print(res)
 
 def convert_sonix_data(data,language,category):
     input_data = normelize_sonix_data(data,language,category)
     input_json_str = json.dumps(input_data)
     input_obj = json.loads(input_json_str, parse_float=Decimal)
-    push(input_obj)
+    #push(input_obj)
+    
+    #res = requests.post('http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/updatePWs', json=input_obj)
+    #print(res)  
 
 def process_praat_dir(input_dir, language,category):
     for current_file in os.listdir(input_dir):

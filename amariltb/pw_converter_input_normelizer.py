@@ -71,15 +71,15 @@ def create_converter_input_data(filename,data,language,user_category):
 
           
         json_item = {
-            'filename':filename,
+            #'filename':filename,
             'word':data_item['text'],
             'start':float(round(Decimal(data_item['xmin']),3)),
             #'end':float(round(Decimal(data_item['xmax']),3)),
-            'category':user_category
+            #'category':user_category
         }
 
-        #if('xmax'  in data_item):
-        #    json_item['end']=float(round(Decimal(data_item['xmax']),3)),
+        if('xmax'  in data_item):
+            json_item['end']=float(round(Decimal(data_item['xmax']),3)),
 
 
         # propogate file durtion:
@@ -103,7 +103,12 @@ def create_converter_input_data(filename,data,language,user_category):
         assignmentId = os.path.splitext(participant_id)[0]
         if(override_filename and items and len(items) and ('filename' in items[0])):
             filename = items[0]['filename']
-        recording_data = createRecordingData(items,filename,assignmentId,language= language)
+        #recording_data = createRecordingData(items,filename,assignmentId,language= language)
+        recording_data = {
+            'assignmentId': assignmentId,
+            'pws':items,
+            'pwsCount':len(items)
+        }
         json_data['recordings'].append(recording_data)
 
     return json_data
