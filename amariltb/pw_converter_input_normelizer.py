@@ -79,12 +79,12 @@ def create_converter_input_data(filename,data,language,user_category):
         }
 
         if('xmax'  in data_item):
-            json_item['end']=float(round(Decimal(data_item['xmax']),3)),
+            json_item['end']=float(round(Decimal(data_item['xmax']),3))
 
 
         # propogate file durtion:
-        if(keyExists(data_item,'file_duration')):
-            json_item['file_duration'] =  data_item['file_duration']
+        #if(keyExists(data_item,'file_duration')):
+        #    json_item['file_duration'] =  data_item['file_duration']
 
         key = data_item['participant_id']
         # create array if does not exist:
