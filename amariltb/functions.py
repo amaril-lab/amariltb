@@ -111,7 +111,7 @@ def create_df_dict(participants):
                 value = ai_item[col_name]
                             
             if(value == None):
-                print('warning, assignment id:'+ai_item['assignmentId']+' missing:'+col_name)
+                #print('warning, assignment id:'+ai_item['assignmentId']+' missing:'+col_name)
 
                 value = np.nan
 
