@@ -55,7 +55,7 @@ class NPrratGridParser:
         text = ''
         xmin=''
         xmax = ''
-        with open(filename, "r",encoding="utf-8") as a_file:
+        with open(filename, "r",encoding="utf-16be") as a_file:
       
             for line in a_file:
                 row_val = line.strip()
