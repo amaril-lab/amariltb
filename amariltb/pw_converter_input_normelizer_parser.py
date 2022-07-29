@@ -49,18 +49,15 @@ class NPrratGridParser:
     def parse(self,filename):
 
         participant_data = []
-        wb = load_workbook(filename)
-        index_sheet =  wb.worksheets[0]
+        #wb = load_workbook(filename)
+        #index_sheet =  wb.worksheets[0]
         participant_id = ""
         text = ''
         xmin=''
         xmax = ''
-        for row_cells in index_sheet.iter_rows():
-            
-            row_val = row_cells[0].value 
-            # DATA LINE:
-            if(row_val):
-
+        with open(filename, "r") as a_file:
+            for line in a_file:
+                row_val = line.strip()
                 # xmin:
                 xmin_start_indx = row_val.find('xmin =')
                 if(xmin_start_indx != -1):

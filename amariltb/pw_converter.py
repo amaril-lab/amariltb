@@ -220,7 +220,7 @@ def convert_prrat(filename,language,category):
     #is_prat = True
     #push(input_obj,is_prat)
     
-    #res = requests.post('http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/filter/animals/en', json=input_obj)
+    #res = requests.post('http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/updatePWs', json=input_obj)
     #print(res)
 
 def convert_sonix_data(data,language,category):
