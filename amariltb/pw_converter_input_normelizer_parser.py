@@ -57,6 +57,7 @@ class NPrratGridParser:
         xmax = ''
         with open(filename, "rb") as a_file:
             text = a_file.read()
+            text = text.decode("utf-8") 
 
             for line in text:
                 row_val = line.strip()
