@@ -55,11 +55,9 @@ class NPrratGridParser:
         text = ''
         xmin=''
         xmax = ''
-        with open(filename, "rb") as a_file:
-            text = a_file.read()
-            text = text.decode("utf_16_le") 
-
-            for line in text:
+        with open(filename, "r",encoding="iso-8859-8") as a_file:
+      
+            for line in a_file:
                 row_val = line.strip()
                 # xmin:
                 xmin_start_indx = row_val.find('xmin =')
