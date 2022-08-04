@@ -50,7 +50,7 @@ class NPrratUserInfoFilter(NormelizerFilter):
             
             # sanity userInfo:
             if(current_user_info == ''):
-                current_user_info = str(uuid.uuid4())
+                current_user_info ='remove'
 
             item["participant_id"] = current_user_info
             # TBD: temporarilty hard code file duration (until we can get it from assignment)
