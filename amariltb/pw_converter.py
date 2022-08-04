@@ -394,9 +394,6 @@ def handleRemoveTransform(word,language,category):
     # get updated index:
     index_items = dynamodb.get_index_items(language,category)
 
-    # verify:
-    verify_index(index_items,language,category)
-
     # get item:
     index_item = getIndexItem(index_items,word)
     if(not index_item):
@@ -405,7 +402,7 @@ def handleRemoveTransform(word,language,category):
         
     # transform exists ? 
     if('transform'in index_item):
-        removeTransform(index_item)
+        dynamodb.delete_index_item(index_item)
     else:
         print('transform for :'+word+' does not exist - no need to remove transform.')
 
