@@ -502,9 +502,6 @@ def handleAddTransform(word,transform,language,category):
     # get updated index:
     index_items = dynamodb.get_index_items(language,category)
 
-    # verify index:
-    verify_index(index_items,language,category)
-   
     # normelize:
     word_normelized = normelize_word( word, language, category )
     transform_normelized = normelize_word( transform, language, category )
@@ -514,30 +511,19 @@ def handleAddTransform(word,transform,language,category):
         if( ("transform" in index_item) and (index_item["transform"] == word_normelized) ):
             raise AssertionError('Error, handleAddTransform: we dont allow transformations of depth greater than 1 (already exists a tranfsorm: ' +index_item['word'] + '-->' + word_normelized )
 
-    # get word item:
-    index_item = getIndexItem(index_items,word_normelized)
-    if(not index_item):
-        print('Error, item for '+word_normelized+' doesnt exist , do nothing and exit ...')
-        return False
+    id =  word_normelized + category + language
+    
+    hashed_id = hashlib.sha1(id.encode("UTF-8")).hexdigest()[5:]
 
-    # get transform item:
-    transform_item = getIndexItem(index_items,transform_normelized)
-    if(not transform_item):
-        print(transform_normelized + ',does not exist in index items ...')
-        
-        # create new index for transfom:
-        index_dict = dynamodb.raw_index_to_dict(index_items,language,category)
-        transform_item = create_index_item(category,language,index_dict["nextIndexVal"],transform_normelized)
-        
-        # update transform_item in DB:
-        dynamodb.update_index([transform_item])
+    new_transform = {
+        "id" : hashed_id,
+        "category": category,
+        "transform": transform_normelized,
+        "word" : word_normelized,
+        "language":language
+    }
+    dynamodb.update_index([new_transform])
 
-        print('created new index:'+rev(transform_normelized,language) + ' : ' + str(transform_item["index"]))
-        
-    if(not ("index" in transform_item) ):
-        raise AssertionError('Error, handleAddTransform: we dont allow transformations of depth greater than 1 (no index prop for transform target item) - word:'+transform_normelized)
-
-    addTransform(index_item,transform_normelized)
 
 
 def index_verify_start(index_dict,language,category):
