@@ -220,8 +220,8 @@ def convert_prrat(filename,language,category):
     #is_prat = True
     #push(input_obj,is_prat)
     
-    #res = requests.post('http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/updatePWs', json=input_obj)
-    #print(res)
+    res = requests.post('http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/updatePWs', json=input_obj)
+    print(res)
 
 def convert_sonix_data(data,language,category):
     input_data = normelize_sonix_data(data,language,category)
@@ -229,8 +229,8 @@ def convert_sonix_data(data,language,category):
     input_obj = json.loads(input_json_str, parse_float=Decimal)
     #push(input_obj)
     
-    #res = requests.post('http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/updatePWs', json=input_obj)
-    #print(res)  
+    res = requests.post('http://ebql8s95f1.execute-api.eu-west-1.amazonaws.com/dev/assignments/updatePWs', json=input_obj)
+    print(res)  
 
 def process_praat_dir(input_dir, language,category):
     for current_file in os.listdir(input_dir):
