@@ -60,8 +60,7 @@ def create_converter_input_data(filename,data,language,user_category):
 
         # TBD: move to RemoveTextItemsFilter - dont write the starts:
         if(data_item['text'] == 'start'):
-            data_item['xmin'] = '0'
-            data_item['xmax'] = '0'
+            continue
 
 
         # override filename (sonix case):
