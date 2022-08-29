@@ -160,15 +160,6 @@ class FilterStringIsContainedBy(Filter):
             return False
 
 
-    def passed(self,item_dict,all_ais_pws_dict = None):
-
-        # no column:
-        if not (self.column_name in item_dict ): 
-            # should pass?                
-            return False
-            
-            
-        return True
 
 class FilterColumnDoesExist(Filter):
     def __init__(self,column_name,does_exist):
