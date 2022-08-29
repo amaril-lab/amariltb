@@ -134,6 +134,53 @@ class FilterStringEquals(Filter):
             return False
 
 
+class FilterStringIsContainedBy(Filter):
+    def __init__(self,str,column_name,filter_if_no_column = True):
+        self.column_name  = column_name
+        self.str = str
+        self.filter_if_no_column = filter_if_no_column
+    
+    def passed(self,item_dict,all_ais_pws_dict = None):
+
+        # no column:
+        if not (self.column_name in item_dict ): 
+            # should pass?
+            if(self.filter_if_no_column): 
+                
+                return False
+            else:
+            
+                return True
+            
+        val  = item_dict[self.column_name]
+        
+        if( self.str in val):
+            return True
+        else:
+            return False
+
+
+    def passed(self,item_dict,all_ais_pws_dict = None):
+
+        # no column:
+        if not (self.column_name in item_dict ): 
+            # should pass?                
+            return False
+            
+            
+        return True
+
+class FilterColumnDoesExist(Filter):
+    def __init__(self,column_name):
+        self.column_name  = column_name    
+    
+    def passed(self,item_dict,all_ais_pws_dict = None):
+
+        # no column:
+        return (self.column_name in item_dict ) 
+
+
+
 class FilterLanguage(Filter):
     def __init__(self,data_item,column_name = 'language'):
         self.column_name  = column_name
