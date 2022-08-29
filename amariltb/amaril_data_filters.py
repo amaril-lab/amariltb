@@ -171,13 +171,15 @@ class FilterStringIsContainedBy(Filter):
         return True
 
 class FilterColumnDoesExist(Filter):
-    def __init__(self,column_name):
-        self.column_name  = column_name    
+    def __init__(self,column_name,does_exist):
+        self.column_name  = column_name  
+        self.does_exist  = does_exist    
+  
     
     def passed(self,item_dict,all_ais_pws_dict = None):
 
         # no column:
-        return (self.column_name in item_dict ) 
+        return (self.column_name in item_dict ) == self.does_exist
 
 
 
