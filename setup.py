@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name='amariltb',
-    version='0.0.999999',
+    version='0.0.9999991',
     author='Shahar Halutz',
     author_email='shahar.halutz@gmail.com',
     description='provides amaril lab services',

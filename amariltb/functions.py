@@ -96,8 +96,11 @@ def get_snapshot(snap_id):
 
 def create_df_dict(participants):
     
-    column_names = ['assignmentId','i_workerAge','i_gender','i_severity','i_meds','i_therapy','i_diagnoses','correctBallSelected']
+    column_names = ['assignmentId','correctBallSelected']
+    ui_column_names = ['workerAge','gender','severity','meds','therapy','diagnoses']
 
+    
+    
     columns = {}
 
     for index,participant in enumerate(participants):
@@ -120,6 +123,23 @@ def create_df_dict(participants):
             else:
                 columns[col_name].append(value)
             
+        if ai_item["userInput"]:
+            for col_name in ui_column_names:
+                
+                value = None
+                if((col_name in ai_item["userInput"])):
+                    value = ai_item["userInput"][col_name]
+                                
+                if(value == None):
+                    #print('warning, assignment id:'+ai_item['assignmentId']+' missing:'+col_name)
+
+                    value = np.nan
+
+                if(index == 0):
+                    columns[col_name] = [value]
+                else:
+                    columns[col_name].append(value)
+                
     return  columns
 
 def hidrate_participants_audio_segments(participants,audio_storage):
