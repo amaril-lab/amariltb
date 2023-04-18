@@ -19,6 +19,89 @@ def rev(s,heb):
     else:
         return s 
 
+class NPrratTextParser:
+    def __init__(self,language):
+        self.language = language
+
+    def getNParser(self,data):
+        file_type = self.identifyFileType(data)
+        
+        if(file_type == 'typeA'):
+            parser = PrratParserTypeA(self.language)
+            return parser
+        return False
+
+    def identifyFileType(self,data):
+        file_type = 'typeA'
+        for index,item in enumerate(data):
+            
+            if item["text"] == 'start':
+                #prev_item = data[index-1]
+                prev_prev_item =  data[index-2]
+                if (prev_prev_item):
+                    pass
+                    #if ('file' in prev_item["text"]):
+                    #    file_type = 'typeB'
+
+
+        return file_type
+
+    def parse(self,filename):
+
+        participant_data = []
+        participant_id = ""
+        text = ''
+        xmin=''
+        xmax = ''
+
+        # Open the file in read-only mode
+        with open(filename, 'r', encoding='utf16') as file:
+            # Read the file line by line
+            for row_val in file:
+                
+                # DATA LINE:
+                if(row_val):
+
+                    # xmin:
+                    xmin_start_indx = row_val.find('xmin =')
+                    if(xmin_start_indx != -1):
+                        xmin = row_val[xmin_start_indx + 6 :]
+                        xmin = xmin.strip()
+
+                    # xmax:
+                    xmax_start_indx = row_val.find('xmax =')
+                    if(xmax_start_indx != -1):
+                        xmax = row_val[xmax_start_indx + 6 :]
+                        xmax = xmax.strip()
+                    
+                    # text:
+                    text_start_indx = row_val.find('text =')
+                    if(text_start_indx != -1):
+                        text = row_val[text_start_indx + 6 :]
+                        text = text.replace('"','').strip()
+                        text = text.replace('“','').strip()
+
+                    if(xmin == '' or xmax == '' or text == ''):
+                        continue
+
+                    if(len(text)  ):
+                        item = {
+                            "participant_id":participant_id ,#rev(participant_id,self.language == 'hebrew'),
+                            "xmin":xmin,
+                            "xmax":xmax,
+                            "text":text #rev(text,self.language == 'hebrew')
+                        }
+                        participant_data.append(item)
+                            
+                    text = ''
+                    xmin=''
+                    xmax = ''   
+                    
+        return participant_data
+
+
+
+
 class NPrratGridParser:
     def __init__(self,language):
         self.language = language

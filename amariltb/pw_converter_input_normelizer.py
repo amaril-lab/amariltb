@@ -1,4 +1,4 @@
-from .pw_converter_input_normelizer_parser import NPrratGridParser 
+from .pw_converter_input_normelizer_parser import NPrratTextParser 
 from .pw_converter_input_normelizer_filters import NSonixTranscriptErrorsFilter,NPrratUserInfoFilter
 import os
 import json
@@ -115,7 +115,7 @@ def path_leaf(path):
 def normelize_prrat_grid(grid_file_xlsx,language,category):
 
     # get data :
-    parser = NPrratGridParser(language)
+    parser = NPrratTextParser(language)
     data = parser.parse(grid_file_xlsx)
     
     # filters:
