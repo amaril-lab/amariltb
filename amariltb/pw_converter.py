@@ -228,7 +228,7 @@ def convert_sonix_data(data,language,category):
 
 def process_praat_dir(input_dir, language,category):
     for current_file in os.listdir(input_dir):
-        if current_file.endswith(".xlsx"):
+        if current_file.endswith(".Text"):
             print('proocsseing file:',current_file)
             convert_prrat(input_dir+current_file,language,category)
     print('done.')
